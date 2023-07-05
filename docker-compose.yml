@@ -1,0 +1,30 @@
+version: "3"
+
+services:
+  keng_ru_parser:
+    build:
+      context: .
+      dockerfile: dockerfiles/Dockerfile.keng_ru
+    depends_on:
+      - "db"
+    networks:
+    - parsing-network
+
+  db:
+    image: postgres:13
+    environment:
+      - POSTGRES_DB=parsing
+      - POSTGRES_USER=parser
+      - POSTGRES_PASSWORD=parserPass-tsum_126
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - parsing-network
+
+networks:
+  parsing-network:

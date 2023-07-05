@@ -1,0 +1,1 @@
+0 1 1,15 * 1 scrapy crawl keng_ru  >> /tmp/out.log 2>/tmp/err.log

@@ -1,0 +1,4 @@
+scrapy==2.9.0
+SQLAlchemy==2.0.15
+beautifulsoup4==4.12.2
+psycopg2-binary==2.9.6

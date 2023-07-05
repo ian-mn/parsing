@@ -1,0 +1,12 @@
+FROM python:3.11.3-slim-bullseye
+
+WORKDIR /usr/src/
+
+COPY ./keng_ru .
+
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY ./scripts .
+RUN chmod 0644 run-every-two-weeks
+
+CMD [ "scrapy", "crawl", "keng_ru" ]
