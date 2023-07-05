@@ -2,11 +2,13 @@ FROM python:3.11.3-slim-bullseye
 
 WORKDIR /usr/src/
 
-COPY ./keng_ru .
-
+COPY ./requirements .
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY ./scripts .
-RUN chmod 0644 run-every-two-weeks
+COPY ./parsers .
 
-CMD [ "scrapy", "crawl", "keng_ru" ]
+COPY ./scripts .
+RUN chmod 0644 cron-jobs
+RUN crontab cron-jobs
+
+CMD [ "tail", "-f", "/dev/null"]

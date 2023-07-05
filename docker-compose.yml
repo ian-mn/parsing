@@ -4,7 +4,7 @@ services:
   keng_ru_parser:
     build:
       context: .
-      dockerfile: dockerfiles/Dockerfile.keng_ru
+      dockerfile: dockerfiles/Dockerfile.parsers
     depends_on:
       - "db"
     networks:

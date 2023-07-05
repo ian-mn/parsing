@@ -1,0 +1,2 @@
+0 1 1,15 * 1 cd keng_ru && scrapy crawl keng_ru
+0 1 * * * cd lamoda && scrapy crawl lamoda
