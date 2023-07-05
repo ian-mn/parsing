@@ -1,7 +1,7 @@
 version: "3"
 
 services:
-  keng_ru_parser:
+  parsers:
     build:
       context: .
       dockerfile: dockerfiles/Dockerfile.parsers
