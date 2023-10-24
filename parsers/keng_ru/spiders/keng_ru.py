@@ -62,7 +62,7 @@ class KengRuSpider(scrapy.Spider):
                 description.rfind(art_start)
                 + len(art_start) : description.rfind(art_end)
             ]
-            article = "".join(c for c in article if c.isalnum()).upper()
+            article = "".join(c for c in article if c.isalnum() or c == " ").upper()
             brand = item["data-brand"]
             category = item["data-category"]
 

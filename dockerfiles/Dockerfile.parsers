@@ -1,8 +1,5 @@
 FROM python:3.11.3-slim-bullseye
 
-RUN apt-get update \
-    && apt-get install -y cron
-
 WORKDIR /usr/src/
 
 COPY ./requirements .
@@ -10,8 +7,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY ./parsers .
 
-COPY ./scripts .
-RUN chmod 0644 cron-jobs
-RUN crontab cron-jobs
-
-CMD [ "tail", "-f", "/dev/null"]
+CMD [ "python", "main.py" ]

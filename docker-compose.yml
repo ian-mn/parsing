@@ -5,13 +5,16 @@ services:
     build:
       context: .
       dockerfile: dockerfiles/Dockerfile.parsers
+    restart: always
     depends_on:
-      - "db"
+      db: 
+        condition: service_healthy
     networks:
     - parsing-network
 
   db:
     image: postgres:13
+    restart: always
     environment:
       - POSTGRES_DB=parsing
       - POSTGRES_USER=parser
@@ -19,14 +22,36 @@ services:
     ports:
       - "5432:5432"
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      test: ["CMD-SHELL", "pg_isready -U parser"]
       interval: 5s
       timeout: 5s
       retries: 5
     networks:
       - parsing-network
+
+  api:
+    build:
+      context: .
+      dockerfile: dockerfiles/Dockerfile.api
+    restart: always
+    ports:
+      - "8002:8002"
+    networks:
+    - parsing-network
+
+  nginx:
+    image: nginx:latest
     volumes:
-      - ./postgres-data:/var/lib/postgresql/data
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/configs:/etc/nginx/conf.d:ro
+    depends_on:
+      - api
+    ports:
+      - "80:80"
+      - "8000:8000"
+    networks:
+      - parsing-network
+
 
 networks:
   parsing-network:
